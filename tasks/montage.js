@@ -5,7 +5,7 @@ module.exports = function (grunt) {
     var exec = require("child_process").exec,
         path = require("path"),
         mkdirp = require("mkdirp"),
-        rSpecial = /([!"#$%&'()*+,-.\/:;<=>?@[\]\\^`{}|~])/g;
+        rSpecial = /([!"#$%&'()*+,.\/;<=>?@[\]\\^`{}|~])/g;
 
     // Build a CSS rule in the format 'selector { property: value; [... property: value;] }'
     function buildRule(selector, properties) {
@@ -75,8 +75,9 @@ module.exports = function (grunt) {
             css += src.map(function (image, i) {
                 var offsetLeft = (-options.size * (i % cols)) + "px",
                     offsetTop = (-options.size * Math.floor(i / cols)) + "px",
-                    className = path.basename(image).replace(/\.\w+$/, "").replace(rSpecial, "\\$1");
-                return buildRule(options.prefix + "." + className, {
+                    className = path.basename(image).replace(/\.\w+$/, "").replace("~", ":").replace(rSpecial, "\\$1"),
+                    selector = (options.prefix + "." + className).replace(/^(.*)\:hover$/, "$1:hover, a:hover $1");
+                return buildRule(selector, {
                     "background-position": offsetLeft + " " + offsetTop
                 });
             }).join("");
