@@ -66,6 +66,18 @@ module.exports = function (grunt) {
                         "text-indent": "-9999px"
                     }
                 }
+            },
+            baseUrl: {
+                files: {
+                    "tmp/baseurl": [
+                        "test/fixtures/*.png"
+                    ]
+                },
+                options: {
+                    baseUrl: "http://mywebsite/",
+                    outputImage: "test.png",
+                    outputStylesheet: "test.css"
+                }
             }
         },
 

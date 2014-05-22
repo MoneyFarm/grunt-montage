@@ -23,6 +23,7 @@ module.exports = function (grunt) {
             defaults = {
                 size: 16,
                 prefix: ".montage",
+                baseUrl: "",
                 outputImage: "montage.png",
                 outputStylesheet: "montage.css",
                 baseRules: {},
@@ -39,7 +40,7 @@ module.exports = function (grunt) {
         }, this);
 
         // Add necessary style rules to the base CSS
-        options.baseRules.background = "url('" + options.outputImage + "') no-repeat";
+        options.baseRules.background = "url('" + options.baseUrl + options.outputImage + "') no-repeat";
         options.baseRules.width = options.size + "px";
         options.baseRules.height = options.size + "px";
 

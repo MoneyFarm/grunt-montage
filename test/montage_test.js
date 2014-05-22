@@ -23,7 +23,13 @@ exports.montage = (function () {
             test.equal(grunt.file.read("tmp/base/base.css").indexOf("display: inline-block;") > -1, true, "should add custom base rule properties to the CSS");
             test.equal(grunt.file.read("tmp/base/base.css").indexOf("text-indent: -9999px;") > -1, true, "should add custom base rule properties to the CSS");
             test.done();
-        }
+        },
+        customBaseUrl: function (test) {
+            test.expect(2);
+            test.equal(grunt.file.exists("tmp/baseUrl/test.png"), true, "should generate a test.png file.");
+            test.equal(grunt.file.exists("tmp/baseUrl/test.css"), true, "should generage a test.css file.");
+            test.done();
+        },
     };
 
 }());
