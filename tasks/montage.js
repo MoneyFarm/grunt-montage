@@ -76,7 +76,7 @@ module.exports = function (grunt) {
 
             // Generate a stylesheet
             css += src.map(function (image, i) {
-                var offsetLeft = (-options.size * (i % cols)) + "px",
+                var offsetLeft = (-options.size * i) + "px",
                     className = path.basename(image).replace(/\.\w+$/, "").replace("~", ":").replace(rSpecial, "\\$1"),
                     selector = (options.prefix + "." + className).replace(/^(.*)\:hover$/, "$1:hover, a:hover $1");
                 return buildRule(selector, {
