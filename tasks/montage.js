@@ -41,8 +41,11 @@ module.exports = function (grunt) {
 
         // Add necessary style rules to the base CSS
         options.baseRules.background = "url('" + options.baseUrl + options.outputImage + "') no-repeat";
-        options.baseRules.width = options.size + "px";
-        options.baseRules.height = options.size + "px";
+        options.baseRules.padding = options.size / 2 + "px";
+
+        // Add necessary options to montage command
+        options.magick.background = "transparent";
+        options.magick.tile = "x1";
 
         // Build ImageMagick montage option string
         cliOptions = Object.keys(options.magick).map(function (option) {
@@ -74,11 +77,10 @@ module.exports = function (grunt) {
             // Generate a stylesheet
             css += src.map(function (image, i) {
                 var offsetLeft = (-options.size * (i % cols)) + "px",
-                    offsetTop = (-options.size * Math.floor(i / cols)) + "px",
                     className = path.basename(image).replace(/\.\w+$/, "").replace("~", ":").replace(rSpecial, "\\$1"),
                     selector = (options.prefix + "." + className).replace(/^(.*)\:hover$/, "$1:hover, a:hover $1");
                 return buildRule(selector, {
-                    "background-position": offsetLeft + " " + offsetTop
+                    "background-position": offsetLeft + " center"
                 });
             }).join("");
 
