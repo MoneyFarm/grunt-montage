@@ -44,9 +44,6 @@ module.exports = function (grunt) {
         options.baseRules.background = "url('" + options.baseUrl + options.outputImage + "') no-repeat";
         options.baseRules.width = options.size + "px";
         options.baseRules.height = options.size + "px";
-        if (options.layout != "grid") {
-            options.baseRules.padding = options.size / 2 + "px";
-        }
 
         // Add necessary options to montage command
         options.magick.background = "transparent";
