@@ -30,6 +30,18 @@ exports.montage = (function () {
             test.equal(grunt.file.exists("tmp/baseUrl/test.css"), true, "should generage a test.css file.");
             test.done();
         },
+        layoutVertical: function (test) {
+            test.expect(2);
+            test.equal(grunt.file.exists("tmp/layoutV/test.png"), true, "should generate a test.png file.");
+            test.equal(grunt.file.exists("tmp/layoutV/test.css"), true, "should generage a test.css file.");
+            test.done();
+        },
+        layoutHorizontal: function (test) {
+            test.expect(2);
+            test.equal(grunt.file.exists("tmp/layoutH/test.png"), true, "should generate a test.png file.");
+            test.equal(grunt.file.exists("tmp/layoutH/test.css"), true, "should generage a test.css file.");
+            test.done();
+        }
     };
 
 }());

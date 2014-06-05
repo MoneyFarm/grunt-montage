@@ -78,6 +78,30 @@ module.exports = function (grunt) {
                     outputImage: "test.png",
                     outputStylesheet: "test.css"
                 }
+            },
+            layoutV: {
+                files: {
+                    "tmp/layoutV": [
+                        "test/fixtures/*.png"
+                    ]
+                },
+                options: {
+                    layout: "vertical",
+                    outputImage: "test.png",
+                    outputStylesheet: "test.css"
+                }
+            },
+            layoutH: {
+                files: {
+                    "tmp/layoutH": [
+                        "test/fixtures/*.png"
+                    ]
+                },
+                options: {
+                    layout: "horizontal",
+                    outputImage: "test.png",
+                    outputStylesheet: "test.css"
+                }
             }
         },
 

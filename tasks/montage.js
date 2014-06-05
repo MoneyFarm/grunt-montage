@@ -24,6 +24,7 @@ module.exports = function (grunt) {
                 size: 16,
                 prefix: ".montage",
                 baseUrl: "",
+                layout: "grid",
                 outputImage: "montage.png",
                 outputStylesheet: "montage.css",
                 baseRules: {},
@@ -41,11 +42,20 @@ module.exports = function (grunt) {
 
         // Add necessary style rules to the base CSS
         options.baseRules.background = "url('" + options.baseUrl + options.outputImage + "') no-repeat";
-        options.baseRules.padding = options.size / 2 + "px";
+        options.baseRules.width = options.size + "px";
+        options.baseRules.height = options.size + "px";
+        if (options.layout != "grid") {
+            options.baseRules.padding = options.size / 2 + "px";
+        }
 
         // Add necessary options to montage command
         options.magick.background = "transparent";
-        options.magick.tile = "x1";
+        if (options.layout == "horizontal") {
+            options.magick.tile = "x1";
+        }
+        if (options.layout == "vertical") {
+            options.magick.tile = "1x";
+        }
 
         // Build ImageMagick montage option string
         cliOptions = Object.keys(options.magick).map(function (option) {
@@ -76,11 +86,24 @@ module.exports = function (grunt) {
 
             // Generate a stylesheet
             css += src.map(function (image, i) {
-                var offsetLeft = (-options.size * i) + "px",
+                var offsetLeft = (-options.size * (i % cols)) + "px",
+                    offsetTop = (-options.size * Math.floor(i / cols)) + "px",
                     className = path.basename(image).replace(/\.\w+$/, "").replace("~", ":").replace(rSpecial, "\\$1"),
                     selector = (options.prefix + "." + className).replace(/^(.*)\:hover$/, "$1:hover, a:hover $1");
+                
+                switch (options.layout) {
+                case "vertical":
+                    offsetLeft = "center";
+                    offsetTop = -(options.size * i) + "px";
+                    break;
+                case "horizontal":
+                    offsetTop = "center";
+                    offsetLeft = -(options.size * i) + "px";
+                    break;
+                }
+
                 return buildRule(selector, {
-                    "background-position": offsetLeft + " center"
+                    "background-position": offsetLeft + " " + offsetTop
                 });
             }).join("");
 
