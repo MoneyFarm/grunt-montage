@@ -108,7 +108,7 @@ module.exports = function (grunt) {
             grunt.file.write(path.join(files.dest, options.outputStylesheet), css);
 
             // Execute the ImageMagick montage tool
-            exec("montage " + cliOptions + " " + src.join(" ") + " " + dest, function (err) {
+            exec("montage -tile " + cols + "x -geometry " + options.size + "x" + options.size + " " + cliOptions + " " + src.join(" ") + " " + dest, function (err) {
                 done();
             });
         });
