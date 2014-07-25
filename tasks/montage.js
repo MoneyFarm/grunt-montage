@@ -25,6 +25,7 @@ module.exports = function (grunt) {
                 prefix: ".montage",
                 baseUrl: "",
                 layout: "grid",
+                cacheBurst: false,
                 outputImage: "montage.png",
                 outputStylesheet: "montage.css",
                 baseRules: {},
@@ -41,7 +42,7 @@ module.exports = function (grunt) {
         }, this);
 
         // Add necessary style rules to the base CSS
-        options.baseRules.background = "url('" + options.baseUrl + options.outputImage + "') no-repeat";
+        options.baseRules.background = "url('" + options.baseUrl + options.outputImage + (options.cacheBurst?'?v='+options.cacheBurst:'') + "') no-repeat";
         options.baseRules.width = options.size + "px";
         options.baseRules.height = options.size + "px";
 
@@ -107,7 +108,7 @@ module.exports = function (grunt) {
             grunt.file.write(path.join(files.dest, options.outputStylesheet), css);
 
             // Execute the ImageMagick montage tool
-            exec("montage -tile " + cols + "x -geometry " + options.size + "x" + options.size + " " + cliOptions + " " + src.join(" ") + " " + dest, function (err) {
+            exec("montage " + cliOptions + " " + src.join(" ") + " " + dest, function (err) {
                 done();
             });
         });
